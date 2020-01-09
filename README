@@ -1,6 +1,8 @@
 This program reads a variable-length array using linked lists and convert it into a useable array
 Input is space-separated and rows are newline-separated
 
+This program is currently set to only read chars. There are plans to generalize the data type.
+
 FILE DESCRIPTION:
 	main.c - Actual program
 	input  - Input data for main.c
