@@ -19,5 +19,12 @@ typedef struct row Row;
 typedef struct array Array;
 
 int main(void) {
+	char c;
 
+	while (scanf("%c", &c) > 0) {
+		if (c == 10) {
+			printf("Newline");
+		}
+		printf("%c", c);
+	}
 }
