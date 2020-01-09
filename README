@@ -1,1 +1,7 @@
-Empty until commit works
+This program reads a variable-length array using linked lists and convert it into a useable array
+Input is space-separated and rows are newline-separated
+
+FILE DESCRIPTION:
+	main.c - Actual program
+	input  - Input data for main.c
+	run    - Bash script used to boost testing speed
