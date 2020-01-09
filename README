@@ -4,6 +4,7 @@ Input is space-separated and rows are newline-separated
 This program is currently set to only read chars. There are plans to generalize the data type.
 
 FILE DESCRIPTION:
-	main.c - Actual program
-	input  - Input data for main.c
-	run    - Bash script used to boost testing speed
+	main.c  - Actual program
+	input   - Input data for main.c
+	run     - Bash script used to boost testing speed
+	compile - Bash script meant to make compiling (to check warnings) faster
