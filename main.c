@@ -20,7 +20,7 @@ typedef struct array Array;
 
 //Functions for freeing list-related data
 void freeRow(Row *r);
-void freeArray(Array *list);
+void freeList(Array *list);
 
 //Functions for adding data to the lists
 void addElement(Row **r, char element);
@@ -32,21 +32,24 @@ void printList(Array *list);
 
 int main(void) {
 	char c;
-	Array *list;
-	Row *tempRow;
+	Array *list = NULL;
+	Row *tempRow = NULL;
 
 	while (scanf("%c", &c) > 0) {
 		if (c == '\n') {
 			addRow(&list, tempRow);
+			tempRow = NULL;
 		}
 		else {
-			addElement(&tempRow, c);
+			if (c != ' ') {
+				addElement(&tempRow, c);
+			}
 		}
 	}
 
 	printList(list);	
 
-	freeRow(tempRow);
+	freeList(list);
 }
 
 void freeRow(Row *r) {
@@ -56,6 +59,17 @@ void freeRow(Row *r) {
 	else {
 		freeRow(r->next);
 		free(r);
+		r = NULL;
+	}
+}
+
+void freeList(Array *list) {
+	if (list == NULL) {
+		return;
+	}
+	else {
+		freeList(list->next);
+		freeRow(list->data);
 	}
 }
 
@@ -80,10 +94,12 @@ void addElement(Row **r, char element) {
 }
 
 void addRow(Array **list, Row *r) {
+	//Create the actual array element to be inserted...
 	Array *toInsert = (Array *) malloc(sizeof(Array));
 	toInsert->data = r;
 	toInsert->next = NULL;
 
+	//...Then insert it into the list
 	if (*list == NULL) {
 		*list = toInsert;
 	}
@@ -97,6 +113,7 @@ void addRow(Array **list, Row *r) {
 	}
 }
 
+//Both functions loop through the row or array, respectively, and call their respective prints.
 void printRow(Row *r) {
 	Row *current = r;
 
@@ -112,6 +129,7 @@ void printList(Array *list) {
 
 	while (current != NULL) {
 		printRow(current->data);
+		printf("\n");
 
 		current = current->next;
 	}
