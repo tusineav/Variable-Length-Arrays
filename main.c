@@ -10,7 +10,7 @@ struct row {
 };
 
 struct array {
-	struct row data;
+	struct row * data;
 
 	struct array * next;
 };
@@ -26,16 +26,25 @@ void freeArray(Array *list);
 void addElement(Row **r, char element);
 void addRow(Array **list, Row *r);
 
+//Functions for printing
+void printRow(Row *r);
+void printList(Array *list);
+
 int main(void) {
 	char c;
 	Array *list;
 	Row *tempRow;
 
 	while (scanf("%c", &c) > 0) {
-		addElement(&tempRow, c);
+		if (c == '\n') {
+			addRow(&list, tempRow);
+		}
+		else {
+			addElement(&tempRow, c);
+		}
 	}
 
-	
+	printList(list);	
 
 	freeRow(tempRow);
 }
@@ -45,8 +54,6 @@ void freeRow(Row *r) {
 		return;
 	}
 	else {
-		//The print is currently here because it's easier to test
-		printf("%c", r->element);
 		freeRow(r->next);
 		free(r);
 	}
@@ -69,5 +76,43 @@ void addElement(Row **r, char element) {
 		}
 
 		current->next = toInsert;
+	}
+}
+
+void addRow(Array **list, Row *r) {
+	Array *toInsert = (Array *) malloc(sizeof(Array));
+	toInsert->data = r;
+	toInsert->next = NULL;
+
+	if (*list == NULL) {
+		*list = toInsert;
+	}
+	else {
+		Array *current = *list;
+		while (current->next != NULL) {
+			current = current->next;
+		}
+		
+		current->next = toInsert;
+	}
+}
+
+void printRow(Row *r) {
+	Row *current = r;
+
+	while (current != NULL) {
+		printf("%c ", current->element);
+		
+		current = current->next;
+	}
+}
+
+void printList(Array *list) {
+	Array *current = list;
+
+	while (current != NULL) {
+		printRow(current->data);
+
+		current = current->next;
 	}
 }
