@@ -53,8 +53,6 @@ int main(void) {
 		}
 	}
 	
-	//printList(list);
-
 	//Prepare to convert the list into an array
 	int rows, cols;
 	
@@ -64,10 +62,12 @@ int main(void) {
 
 	Array *current = list;
 
+	//Loop through each row, adding elements to the array as necessary
 	for(int i = 0; i < rows; i++) {
 		tempRow = current->data;
 
 		for(int j = 0; j < cols; j++) {
+			//In this case, the number of elements read does not match the column size. Indicate missing elements with *
 			if (tempRow == NULL) {
 				array[i][j] = '*';
 				continue;
@@ -81,6 +81,7 @@ int main(void) {
 		current = current->next;
 	}
 
+	//Print the array
 	for(int i = 0; i < rows; i++) {
 		for(int j = 0; j < cols; j++) {
 			printf("%c ", array[i][j]);
@@ -191,6 +192,7 @@ void countElements(Array *list, int *rows, int *cols) {
 }
 
 //Both functions loop through the row or array, respectively, and call their respective prints.
+//Both functions currently unused
 void printRow(Row *r) {
 	Row *current = r;
 
