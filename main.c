@@ -53,14 +53,36 @@ int main(void) {
 		}
 	}
 
-	printList(list);
+	//printList(list);
 
 	//Prepare to convert the list into an array
 	int rows, cols;
 	
 	countElements(list, &rows, &cols);
 
-	printf("%d %d", rows, cols);
+	int array[rows][cols];
+
+	Array *current = list;
+
+	for(int i = 0; i < rows; i++) {
+		tempRow = current->data;
+
+		for(int j = 0; j < cols; j++) {
+			array[i][j] = tempRow->element;
+
+			tempRow = tempRow->next;
+		}
+
+		current = current->next;
+	}
+
+	for(int i = 0; i < rows; i++) {
+		for(int j = 0; j < cols; j++) {
+			printf("%c ", array[i][j]);
+		}
+
+		printf("\n");
+	}
 
 	freeList(list);
 }
