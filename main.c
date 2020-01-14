@@ -52,7 +52,7 @@ int main(void) {
 			}
 		}
 	}
-
+	
 	//printList(list);
 
 	//Prepare to convert the list into an array
@@ -68,6 +68,11 @@ int main(void) {
 		tempRow = current->data;
 
 		for(int j = 0; j < cols; j++) {
+			if (tempRow == NULL) {
+				array[i][j] = '*';
+				continue;
+			}
+
 			array[i][j] = tempRow->element;
 
 			tempRow = tempRow->next;
