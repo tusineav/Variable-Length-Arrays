@@ -26,28 +26,41 @@ void freeList(Array *list);
 void addElement(Row **r, char element);
 void addRow(Array **list, Row *r);
 
+void countElements(Array *list, int *rows, int *cols);
+
 //Functions for printing
 void printRow(Row *r);
 void printList(Array *list);
 
 int main(void) {
+	//Prepare to read all input data
 	char c;
 	Array *list = NULL;
 	Row *tempRow = NULL;
 
+	//Loop over all input data
 	while (scanf("%c", &c) > 0) {
+		//Newline indicates a new row, add the current row to the list
 		if (c == '\n') {
 			addRow(&list, tempRow);
 			tempRow = NULL;
 		}
 		else {
+			//Otherwise, add the read element. Skip whitespace
 			if (c != ' ') {
 				addElement(&tempRow, c);
 			}
 		}
 	}
 
-	printList(list);	
+	printList(list);
+
+	//Prepare to convert the list into an array
+	int rows, cols;
+	
+	countElements(list, &rows, &cols);
+
+	printf("%d %d", rows, cols);
 
 	freeList(list);
 }
@@ -111,6 +124,43 @@ void addRow(Array **list, Row *r) {
 		
 		current->next = toInsert;
 	}
+}
+
+void countElements(Array *list, int *rows, int *cols) {
+
+	//Since jagged arrays don't exist in C, we will keep track of the max number of columns. This will reduce error due to user input
+	int maxCols = 0;
+	Array *current = list;
+	Row *tempRow;
+
+	*rows = 0;
+	//If the list exists, loop through the list
+	while (current != NULL) {
+		(*rows)++;
+
+		//If the row exists, loop through all elements
+		if (current->data != NULL) {
+			*cols = 0;
+			tempRow = current->data;
+
+			//Count the number of elements in the row
+			while (tempRow != NULL) {
+				(*cols)++;
+			
+				tempRow = tempRow->next;
+			}
+			
+			//Update the max number of columns if needed
+			if (*cols > maxCols) {
+				maxCols = *cols;
+			}
+
+		}
+
+		current = current->next;
+	}
+
+	*cols = maxCols;
 }
 
 //Both functions loop through the row or array, respectively, and call their respective prints.
